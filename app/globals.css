@@ -1,0 +1,492 @@
+@import "tailwindcss";
+@import "@xyflow/react/dist/style.css";
+
+:root {
+  color-scheme: light;
+  --background: #ffffff;
+  --foreground: #202123;
+  --card: #f7f7f7;
+  --card-foreground: #202123;
+  --primary: #6b3ed2;
+  --primary-foreground: #ffffff;
+  --secondary: #f5f5f5;
+  --secondary-foreground: #202123;
+  --muted: #ececec;
+  --muted-foreground: #66686c;
+  --accent: #ededed;
+  --accent-foreground: #202123;
+  --border: #e7e7e7;
+  --input: #d6d6d6;
+  --ring: #737373;
+  --warning: #925000;
+  --destructive: #b42342;
+  --hero-glow: transparent;
+  --grid-line: transparent;
+  --radius: 0.75rem;
+  --success: #23754b;
+  --app-font:
+    ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+    sans-serif;
+}
+
+/* CSS follows the device preference on first paint and while the page is open. */
+@media (prefers-color-scheme: dark) {
+  :root {
+    color-scheme: dark;
+    --background: #212121;
+    --foreground: #ececec;
+    --card: #292929;
+    --card-foreground: #ececec;
+    --primary: #ac96ff;
+    --primary-foreground: #171127;
+    --secondary: #2b2b2b;
+    --secondary-foreground: #ececec;
+    --muted: #353535;
+    --muted-foreground: #ababab;
+    --accent: #303030;
+    --accent-foreground: #ececec;
+    --border: #383838;
+    --input: #4b4b4b;
+    --ring: #a3a3a3;
+    --warning: #fcd34d;
+    --destructive: #fda4af;
+    --success: #7ed7a6;
+    --hero-glow: transparent;
+    --grid-line: transparent;
+  }
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-warning: var(--warning);
+  --color-destructive: var(--destructive);
+  --color-success: var(--success);
+  --font-sans:
+    ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+    sans-serif;
+  --font-mono: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+}
+
+@layer base {
+  * {
+    border-color: var(--border);
+  }
+  body {
+    background: var(--background);
+    color: var(--foreground);
+    font-family: var(--app-font);
+    line-height: 1.5;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+  }
+  button,
+  a,
+  input,
+  textarea,
+  [role="tab"] {
+    -webkit-tap-highlight-color: transparent;
+  }
+  button:not(:disabled),
+  [role="tab"] {
+    cursor: pointer;
+  }
+  :focus-visible {
+    outline: 2px solid var(--ring);
+    outline-offset: 4px;
+  }
+  ::selection {
+    background: color-mix(in srgb, var(--primary) 25%, transparent);
+    color: var(--foreground);
+  }
+  html {
+    scroll-behavior: smooth;
+  }
+}
+
+@layer components {
+  .page-container {
+    width: 100%;
+    max-width: 1200px;
+    margin-inline: auto;
+    padding-inline: 20px;
+  }
+  .eyebrow {
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.01em;
+  }
+  .hero-glow {
+    background: radial-gradient(
+      ellipse at 68% 20%,
+      var(--hero-glow) 0%,
+      transparent 60%
+    );
+  }
+  .grid-surface {
+    background-image:
+      linear-gradient(var(--grid-line) 1px, transparent 1px),
+      linear-gradient(90deg, var(--grid-line) 1px, transparent 1px);
+    background-size: 40px 40px;
+  }
+  .reveal {
+    animation: reveal 0.55s ease-out both;
+  }
+}
+
+@keyframes reveal {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+@media (min-width: 768px) {
+  .page-container {
+    padding-inline: 40px;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+  }
+}
+
+/* Keep graph controls consistent with the app instead of library default colors. */
+.react-flow {
+  --xy-controls-button-background-color: var(--card);
+  --xy-controls-button-background-color-hover: var(--secondary);
+  --xy-controls-button-color: var(--foreground);
+  --xy-controls-button-color-hover: var(--foreground);
+  --xy-controls-button-border-color: var(--border);
+}
+
+/* One design system across public, HR and invited candidate surfaces. */
+.workspace-shell {
+  --workspace-sidebar: #f9f9f9;
+  background: var(--background);
+  color: var(--foreground);
+}
+@media (prefers-color-scheme: dark) {
+  .workspace-shell {
+    --workspace-sidebar: #171717;
+  }
+}
+.workspace-page {
+  padding-block: 32px;
+}
+.workspace-page :is(h1, h2, h3, p, li, blockquote, dt, dd),
+.candidate-workplace :is(h1, h2, h3, p, li, blockquote, dt, dd) {
+  overflow-wrap: anywhere;
+}
+.candidate-workplace :is(aside, section) {
+  min-width: 0;
+}
+.workspace-page fieldset {
+  min-width: 0;
+}
+.workspace-page label {
+  line-height: 1.5;
+  font-weight: 500;
+}
+.workspace-page summary {
+  padding-block: 8px;
+}
+.ui-control {
+  border: 1px solid var(--input);
+  border-radius: 12px;
+  background: var(--background);
+  color: var(--foreground);
+  font: inherit;
+  font-size: 14px;
+  line-height: 1.5;
+  min-width: 0;
+  transition:
+    border-color 150ms ease,
+    box-shadow 150ms ease;
+}
+.ui-control:hover:not(:disabled) {
+  border-color: var(--muted-foreground);
+}
+.ui-control:focus-visible {
+  outline-offset: 2px;
+}
+.ui-control[aria-invalid="true"] {
+  border-color: var(--destructive);
+}
+.ui-control:disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+select.ui-control {
+  appearance: none;
+  padding-right: 40px;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='none' stroke='%23737373' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m4 6 4 4 4-4'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 12px center;
+}
+input[type="checkbox"] {
+  width: 16px;
+  height: 16px;
+  accent-color: var(--foreground);
+  cursor: pointer;
+  flex-shrink: 0;
+}
+input[type="checkbox"]:disabled {
+  cursor: not-allowed;
+}
+.ui-dialog {
+  width: calc(100% - 32px);
+  max-height: 90dvh;
+  border: 0;
+  border-radius: 20px;
+  box-shadow: 0 24px 80px #0003;
+}
+.ui-dialog::backdrop {
+  background: #0006;
+  backdrop-filter: blur(3px);
+}
+.ui-dialog-header {
+  padding: 16px 20px;
+}
+.ui-dialog-body {
+  padding: 24px 20px;
+}
+.ui-table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+  font-size: 14px;
+}
+.ui-table thead {
+  background: var(--secondary);
+  color: var(--muted-foreground);
+  font-size: 12px;
+}
+.ui-table th {
+  padding: 14px 20px;
+  font-weight: 500;
+  white-space: nowrap;
+}
+.ui-table td {
+  padding: 18px 20px;
+}
+.ui-table tbody tr {
+  border-top: 1px solid var(--border);
+  transition: background 150ms ease;
+}
+.ui-table tbody tr:hover {
+  background: color-mix(in srgb, var(--secondary) 55%, transparent);
+}
+.ui-table-scroll {
+  overflow-x: auto;
+  border-radius: 12px;
+  scrollbar-width: thin;
+}
+.ui-toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px;
+}
+.ui-toolbar > :is(input, select) {
+  flex: 1 1 180px;
+}
+.ui-toolbar > input {
+  flex-basis: 280px;
+}
+@media (min-width: 768px) {
+  .workspace-page {
+    padding-block: 40px;
+  }
+  .ui-dialog-header {
+    padding-inline: 28px;
+  }
+  .ui-dialog-body {
+    padding: 28px;
+  }
+}
+@media (max-width: 639px) {
+  .ui-toolbar > :is(input, select) {
+    width: 100%;
+    max-width: none;
+    flex-basis: 100%;
+  }
+  .ui-control {
+    font-size: 16px;
+  }
+  [data-slot="button"][data-size="icon"] {
+    width: 44px;
+    height: 44px;
+  }
+}
+@media (min-width: 1280px) {
+  .candidate-workplace aside {
+    align-self: start;
+  }
+}
+
+/* Candidate workspace: fixed viewport, independent reference and conversation scrolling. */
+.candidate-workplace.is-active {
+  height: 100dvh;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+.candidate-workplace-header {
+  flex: none;
+}
+.candidate-monitoring-strip {
+  flex: none;
+  max-height: 32dvh;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+}
+.candidate-workspace-grid {
+  flex: 1;
+  min-height: 0;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  grid-template-rows: minmax(0, 1fr);
+  overflow: hidden;
+  width: 100%;
+  max-width: 1800px;
+  margin-inline: auto;
+}
+.candidate-workplace .candidate-side-panel {
+  align-self: stretch;
+  min-width: 0;
+  min-height: 0;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  padding: 20px;
+  scrollbar-gutter: stable;
+  overflow-wrap: anywhere;
+}
+.candidate-side-panel > * + * {
+  margin-top: 16px;
+}
+.candidate-conversation {
+  min-width: 0;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+.candidate-conversation-heading {
+  flex: none;
+  padding: 16px 24px;
+  border-bottom: 1px solid var(--border);
+}
+.candidate-messages {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  padding: 24px;
+  scrollbar-gutter: stable;
+}
+.candidate-messages > li {
+  max-width: 760px;
+  margin: 0 auto 24px;
+}
+.candidate-messages > .candidate-message {
+  display: flex;
+  justify-content: flex-end;
+}
+.chat-message-content {
+  padding: 16px 20px;
+  max-width: 100%;
+}
+.candidate-message .chat-message-content {
+  max-width: 90%;
+}
+.candidate-composer {
+  flex: none;
+  width: 100%;
+  max-width: 840px;
+  margin-inline: auto;
+  padding: 16px 24px 20px;
+  max-height: 45dvh;
+  overflow-y: auto;
+  background: var(--background);
+}
+.candidate-composer form {
+  padding: 14px 16px;
+  border-radius: 24px;
+  background: var(--card);
+}
+.candidate-composer textarea {
+  border: 0;
+  background: transparent;
+  box-shadow: none;
+  padding: 8px 0;
+}
+.candidate-mobile-panels {
+  flex: none;
+  display: flex;
+  gap: 8px;
+  padding: 10px 16px;
+  border-bottom: 1px solid var(--border);
+}
+.candidate-mobile-panels button {
+  flex: 1;
+  border-radius: 999px;
+  padding: 8px;
+  font-size: 12px;
+}
+.candidate-mobile-panels button[aria-pressed="true"] {
+  background: var(--secondary);
+}
+@media (max-width: 1023px) {
+  .candidate-workspace-grid > [data-mobile-active="false"] {
+    display: none;
+  }
+  .candidate-messages {
+    padding: 16px;
+  }
+  .candidate-composer {
+    padding: 10px 12px 16px;
+  }
+  .candidate-conversation-heading {
+    padding: 12px 16px;
+  }
+}
+@media (min-width: 1024px) {
+  .candidate-workspace-grid {
+    grid-template-columns: 260px minmax(0, 1fr) 300px;
+  }
+  .candidate-mobile-panels {
+    display: none;
+  }
+  .candidate-side-panel:first-child {
+    border-right: 1px solid var(--border);
+  }
+  .candidate-side-panel:last-child {
+    border-left: 1px solid var(--border);
+  }
+}

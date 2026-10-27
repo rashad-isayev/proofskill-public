@@ -1,0 +1,32 @@
+node_modules/
+.next/
+out/
+coverage/
+playwright-report/
+test-results/
+.env*
+!.env.example
+*.tsbuildinfo
+.DS_Store
+.vercel/
+next-env.d.ts
+
+# Local tools, agent instructions and editor state
+AGENTS.md
+CLAUDE.md
+WORKBOARD.md
+MEMORY.md
+.agents/
+.codex/
+.cursor/
+.idea/
+.vscode/
+
+# Private local data and diagnostics
+*.log
+*.webm
+*.mp4
+*.sqlite
+*.sqlite3
+*.dump
+*.backup

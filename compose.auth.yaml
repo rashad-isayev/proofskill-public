@@ -1,0 +1,19 @@
+name: proofskill-auth
+services:
+  postgres:
+    image: postgres:18-alpine
+    ports:
+      - "127.0.0.1:55432:5432"
+    environment:
+      POSTGRES_DB: proofskill_auth
+      POSTGRES_USER: proofskill_auth
+      POSTGRES_PASSWORD: ${PROOFSKILL_AUTH_DB_PASSWORD:?Set PROOFSKILL_AUTH_DB_PASSWORD in .env.local}
+    volumes:
+      - auth-data:/var/lib/postgresql
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U proofskill_auth -d proofskill_auth"]
+      interval: 3s
+      timeout: 3s
+      retries: 10
+volumes:
+  auth-data:
